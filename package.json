@@ -1,0 +1,55 @@
+{
+  "name": "react_exercise",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/react_exercise.cjs.js",
+  "module": "./dist/react_exercise.es.mjs",
+  "types": "dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/react_exercise.es.mjs",
+      "require": "./dist/react_exercise.cjs.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "vite",
+    "test": "vitest",
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "prettier:check": "prettier --check src",
+    "build": "vite build ",
+    "preview": "vite preview",
+    "mock": "json-server db.json -p 3001"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.4.5",
+    "@testing-library/react": "15.0.7",
+    "@testing-library/user-event": "14.5.2",
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.2",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react": "4.2.1",
+    "@vitest/coverage-istanbul": "1.6.0",
+    "autoprefixer": "10.4.19",
+    "eslint": "8.56.0",
+    "jsdom": "24.0.0",
+    "json-server": "1.0.0-beta.0",
+    "postcss": "8.4.39",
+    "prettier": "3.2.5",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.3.3",
+    "vite": "5.2.11",
+    "vite-bundle-visualizer": "1.2.1",
+    "vite-plugin-checker": "0.6.4",
+    "vite-plugin-svgr": "4.2.0",
+    "vitest": "1.6.0"
+  }
+}
