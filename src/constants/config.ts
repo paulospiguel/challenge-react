@@ -1,4 +1,4 @@
-export const bankUrl = "https://bank.com"; // process.env.BANK_URL;
+export const bankUrl = "http://localhost:5001"; // process.env.BANK_URL;
 
 export const MAX_MONTHS = 12; // process.env.MAX_MONTHS;
 export const MIN_MONTHS = 3; // process.env.MIN_MONTHS;
