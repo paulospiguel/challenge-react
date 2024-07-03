@@ -1,10 +1,19 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { getLimits } from '../actions/getLimits';
+import { ResponseLimit as Limit } from '../types/limits';
+import { Steps } from '../constants/steps';
+import { MAX_MONTHS, MIN_MONTHS } from '../constants/config';
 
 type AppContextType = {
   amount: number | undefined;
-  mounth: number | undefined;
+  month: number | undefined;
   onSetAmount: (value: number) => void;
-  onSetMounth: (value: number) => void;
+  onSetMonth: (value: number) => void;
+  onSetStep: (value: number) => void;
+  MAX_MONTHS: number;
+  MIN_MONTHS: number;
+  limit: Limit | null;
+  step: Steps;
 };
 
 const AppContext = createContext({} as AppContextType);
@@ -14,31 +23,59 @@ type AppContextProps = {
 };
 
 export const AppContextProvider = ({ children }: AppContextProps) => {
-  const [amount, setAmount] = useState<number>();
-  const [mounth, setMounth] = useState<number>(3);
+  const [amount, setAmount] = useState<number>(0);
+  const [month, setMonth] = useState<number>(MIN_MONTHS);
+  const [limit, setLimit] = useState<Limit | null>(null);
+  const [step, setStep] = useState<Steps>(Steps.step1);
+
+  console.log("step", step);
+
+  useEffect(() => {
+    getLimits().then(data => {
+      setLimit({
+        max: data?.max,
+        min: data?.min,
+        currency: data?.currency,
+      });
+      setAmount(data?.min);
+    });
+  }, []);
 
   const onSetAmount = useCallback(
     (value: number) => {
       setAmount(value);
     },
-    [amount],
+    [amount, setAmount],
   );
 
-  const onSetMounth = useCallback(
+  const onSetMonth = useCallback(
     (value: number) => {
-      setMounth(value);
+      setMonth(value);
     },
-    [mounth],
+    [month, setMonth],
+  );
+
+  const onSetStep = useCallback(
+    (value: Steps) => {
+      console.log(value);
+      setStep(value);
+    },
+    [step, setStep],
   );
 
   const value = useMemo(
     () => ({
-      amount,
-      mounth,
-      onSetMounth,
+      amount: amount || limit?.min,
+      month,
+      onSetMonth,
       onSetAmount,
+      onSetStep,
+      MAX_MONTHS,
+      MIN_MONTHS,
+      limit,
+      step
     }),
-    [amount, mounth],
+    [amount, month, step, limit],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
