@@ -1,4 +1,4 @@
-import { banckUrl } from "../constants/config";
+import { bankUrl } from "../constants/config";
 import { Currency, TakeCreditParams } from "../types/limits";
 
 export const formatValue = (value: number, currency: Currency) => {
@@ -14,7 +14,7 @@ export const calculeMonthlyPayment = (amount: number, months: number, currency: 
 
 export const redirectToTakeCredit = (params: TakeCreditParams) => {
   const { amount, month } = params || {};
-  const link = new URL(banckUrl);
+  const link = new URL(bankUrl);
   link.searchParams.append("montante", String(amount));
   link.searchParams.append("finalidade", "3");
   link.searchParams.append("subfinalidade", "1");
